@@ -1,0 +1,115 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styleaddjob.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Add Quiz</h1>
+    <form>
+      <label for="quizName">Quiz Title:</label>
+      <input type="text" id="quizName" name="quizName" />
+
+      <label for="quizDescription">Quiz Description:</label>
+      <textarea id="quizDescription" name="quizDescription"></textarea>
+
+      <label for="quizLength">Quiz Title:</label>
+      <input type="text" id="quizLength" name="quizLength" />
+      <button id="createQuestions" ></button>
+      <div id="questions"></div>
+
+
+      <button id="submitBtn" type="submit">Submit</button>
+    </form>
+
+      <script>
+         const form = document.querySelector('form');
+      const submitBtn = document.querySelector('#submitBtn');
+      const createBtn = document.querySelector('#createQuestions');
+
+      createBtn.addEventListener('click',(event)=>{
+        event.preventDefault();
+        const quizLength = document.querySelector('#quizLength').value;
+        const questions = document.querySelector('#questions');
+        for(let i=0;i<quizLength;i++){
+          const question = document.createElement('div');
+          question.innerHTML = '';
+          question.innerHTML = `
+          <label for="question${i}">Question ${i+1}:</label>
+          <input type="text" id="question${i}" name="question${i}" />
+          <label for="option1${i}">Option 1:</label>
+          <input type="text" id="option1${i}" name="option1${i}" />
+          <label for="option2${i}">Option 2:</label>
+          <input type="text" id="option2${i}" name="option2${i}" />
+          <label for="option3${i}">Option 3:</label>
+          <input type="text" id="option3${i}" name="option3${i}" />
+          <label for="option4${i}">Option 4:</label>
+          <input type="text" id="option4${i}" name="option4${i}" />
+          <label for="correctOption${i}">Correct Option:</label>
+          <input type="text" id="correctOption${i}" name="correctOption${i}" />
+          `;
+          questions.appendChild(question);
+        }
+      })
+
+      submitBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const quizName = document.querySelector('#quizName').value;
+        const quizDescription = document.querySelector('#quizDescription').value;
+        const quizLength = document.querySelector('#quizLength').value;
+        const questions1 = document.querySelector('#questions');
+        let questions=[]
+        for (let i=0;i<quizLength;i++){
+          let question = document.querySelector(`#question${i}`).value;
+          let option1 = document.querySelector(`#option1${i}`).value;
+          let option2 = document.querySelector(`#option2${i}`).value;
+          let option3 = document.querySelector(`#option3${i}`).value;
+          let option4 = document.querySelector(`#option4${i}`).value;
+          let answer = document.querySelector(`#correctOption${i}`).value;
+
+        
+          questions.push({
+            question,
+            option1,
+            option2,
+            option3,
+            option4,
+            answer
+          })
+        }
+
+
+        console.log(quizName, quizDescription, quizLength, questions);
+
+        const token = localStorage.getItem('token');
+        const quizQuestions = questions;
+        const data = {
+          quizName,
+          quizDescription,
+          quizLength,
+          quizQuestions
+        };
+
+        fetch('http://localhost:3001/api/quiz/create/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            alert('Quiz created successfully!');
+            form.reset();
+          })
+          .catch((error) => console.error(error));
+      });
+      </script>
+</body>
+</html>
+  
