@@ -1,0 +1,48 @@
+.body1{
+    padding-left: 10%;
+}
+
+.job-listings {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    
+  }
+  
+  .job-listings th {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .job-listings td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .job-listings tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .job-listings tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+  }
+  
+  .apply-btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .apply-btn:hover {
+    background-color: #3e8e41;
+  }
+  
